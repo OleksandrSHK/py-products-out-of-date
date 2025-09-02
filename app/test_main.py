@@ -4,9 +4,9 @@ from unittest.mock import MagicMock
 from app.main import outdated_products
 
 
-@mock.patch("app.main.datetime.date.today")
+@mock.patch("app.main.datetime")
 def test_one_outdated_products(mock_date_today: MagicMock) -> None:
-    mock_date_today.return_value = datetime.date(2022, 2, 1)
+    mock_date_today.date.today.return_value = datetime.date(2022, 2, 2)
     result = outdated_products([
         {
             "name": "salmon",
@@ -26,9 +26,9 @@ def test_one_outdated_products(mock_date_today: MagicMock) -> None:
     assert result == ["duck"]
 
 
-@mock.patch("app.main.datetime.date.today")
+@mock.patch("app.main.datetime")
 def test_all_outdated_products(mock_date_today: MagicMock) -> None:
-    mock_date_today.return_value = datetime.date(2022, 2, 11)
+    mock_date_today.date.today.return_value = datetime.date(2022, 2, 11)
     result = outdated_products([
         {
             "name": "salmon",
@@ -48,9 +48,9 @@ def test_all_outdated_products(mock_date_today: MagicMock) -> None:
     assert result == ["salmon", "chicken", "duck"]
 
 
-@mock.patch("app.main.datetime.date.today")
+@mock.patch("app.main.datetime")
 def test_no_outdated_products(mock_date_today: MagicMock) -> None:
-    mock_date_today.return_value = datetime.date(2022, 1, 1)
+    mock_date_today.date.today.return_value = datetime.date(2022, 1, 1)
     result = outdated_products([
         {
             "name": "salmon",
